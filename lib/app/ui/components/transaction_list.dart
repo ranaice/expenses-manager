@@ -9,14 +9,32 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: transactions.length,
-      itemBuilder: (_, index) {
-        final transaction = transactions[index];
-        return _transactionItem(context, transaction);
-      },
-    );
+    return transactions.isEmpty
+        ? Column(
+            children: <Widget>[
+              SizedBox(height: 16),
+              Text(
+                'Nenhuma transação cadastrada',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              SizedBox(height: 24),
+              Container(
+                height: 200,
+                child: Image.asset(
+                  'assets/images/waiting.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          )
+        : ListView.builder(
+            shrinkWrap: true,
+            itemCount: transactions.length,
+            itemBuilder: (_, index) {
+              final transaction = transactions[index];
+              return _transactionItem(context, transaction);
+            },
+          );
   }
 
   Card _transactionItem(BuildContext context, Transaction transaction) {
