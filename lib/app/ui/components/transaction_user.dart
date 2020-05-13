@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:expensesmanager/app/model/transaction.dart';
 import 'package:expensesmanager/app/ui/components/transaction_form.dart';
 import 'package:expensesmanager/app/ui/components/transaction_list.dart';
@@ -22,8 +24,19 @@ class _TransactionUserState extends State<TransactionUser> {
         TransactionList(
           transactions: _transactions,
         ),
-        TransactionForm(),
+        TransactionForm(
+          onAddTransaction: _addTransaction,
+        ),
       ],
     );
+  }
+
+  _addTransaction(String title, double value) {
+    final newTransaction =
+        Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+
+    setState(() {
+      _transactions.add(newTransaction);
+    });
   }
 }

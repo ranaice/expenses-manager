@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TransactionForm extends StatelessWidget {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _valueController = TextEditingController();
+  final void Function(String, double) onAddTransaction;
+
+  TransactionForm({Key key, this.onAddTransaction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,9 @@ class TransactionForm extends StatelessWidget {
             SizedBox(height: 8),
             TextField(
               controller: _valueController,
-              decoration: InputDecoration(labelText: 'Valoe (R\$)'),
+              decoration: InputDecoration(labelText: 'Valor (R\$)'),
+              inputFormatters: [WhitelistingTextInputFormatter(RegExp("[,.0-9]"))],
+              keyboardType: TextInputType.number,
             ),
             SizedBox(
               height: 12,
@@ -28,8 +34,7 @@ class TransactionForm extends StatelessWidget {
               child: Text('Nova Transação'),
               textColor: Colors.purple,
               onPressed: () {
-                print(_titleController.text);
-                print(_valueController.text);
+                onAddTransaction(_titleController.text, double.parse(_valueController.text));
               },
             )
           ],
