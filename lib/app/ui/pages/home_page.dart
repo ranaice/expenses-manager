@@ -15,12 +15,11 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text('Despesas Pessoais'),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        body: ListView(
+          padding: EdgeInsets.all(8),
           children: <Widget>[
             Card(
               elevation: 5,
-              margin: EdgeInsets.all(8),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text('Gráfico'),

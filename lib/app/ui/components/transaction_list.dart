@@ -9,12 +9,13 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ...transactions.map((transaction) {
-          return _transactionItem(transaction);
-        }).toList()
-      ],
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: transactions.length,
+      itemBuilder: (_, index) {
+        final transaction = transactions[index];
+        return _transactionItem(transaction);
+      },
     );
   }
 

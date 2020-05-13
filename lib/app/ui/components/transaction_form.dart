@@ -19,13 +19,16 @@ class TransactionForm extends StatelessWidget {
             TextField(
               controller: _titleController,
               decoration: InputDecoration(labelText: 'Título'),
+              onSubmitted: (_) => _submitForm(),
             ),
             SizedBox(height: 8),
             TextField(
               controller: _valueController,
               decoration: InputDecoration(labelText: 'Valor (R\$)'),
               inputFormatters: [WhitelistingTextInputFormatter(RegExp("[,.0-9]"))],
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => _submitForm(),
+              textInputAction: TextInputAction.done,
             ),
             SizedBox(
               height: 12,
@@ -33,13 +36,24 @@ class TransactionForm extends StatelessWidget {
             FlatButton(
               child: Text('Nova Transação'),
               textColor: Colors.purple,
-              onPressed: () {
-                onAddTransaction(_titleController.text, double.parse(_valueController.text));
-              },
+              onPressed: _submitForm,
             )
           ],
         ),
       ),
     );
+  }
+
+  _submitForm() {
+    final title = _titleController.text;
+    final value = double.tryParse(_valueController.text) ?? 0.0;
+
+    if (_isFormValid(title, value)) {
+      onAddTransaction(title, value);
+    }
+  }
+
+  _isFormValid(String title, double value) {
+    return title.isNotEmpty && value > 0;
   }
 }
