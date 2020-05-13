@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class TransactionForm extends StatelessWidget {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _valueController = TextEditingController();
+class TransactionForm extends StatefulWidget {
   final void Function(String, double) onAddTransaction;
 
   TransactionForm({Key key, this.onAddTransaction}) : super(key: key);
+
+  @override
+  _TransactionFormState createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  final TextEditingController _titleController = TextEditingController();
+
+  final TextEditingController _valueController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +56,7 @@ class TransactionForm extends StatelessWidget {
     final value = double.tryParse(_valueController.text) ?? 0.0;
 
     if (_isFormValid(title, value)) {
-      onAddTransaction(title, value);
+      widget.onAddTransaction(title, value);
     }
   }
 

@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   final _transactions = [
     Transaction(id: 't1', title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
     Transaction(id: 't2', title: 'Conta de luz', value: 400, date: DateTime.now()),
-    Transaction(id: 't3', title: 'Playstation 3', value: 1200, date: DateTime.now()),
+    Transaction(id: 't3', title: 'Playstation 4', value: 1200, date: DateTime.now()),
   ];
 
   @override
@@ -73,5 +73,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _transactions.add(newTransaction);
     });
+
+    Navigator.pop(context);
   }
 }
