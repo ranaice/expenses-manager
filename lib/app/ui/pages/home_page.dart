@@ -1,5 +1,6 @@
 import 'package:expensesmanager/app/model/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
     Transaction(id: 't2', title: 'Conta de luz', value: 400, date: DateTime.now()),
     Transaction(id: 't3', title: 'Playstation 3', value: 1200, date: DateTime.now()),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,11 +33,38 @@ class _HomePageState extends State<HomePage> {
                 child: Text('Gráfico'),
               ),
             ),
-            Column(children: [
-              ..._transactions.map((transaction) {
-                return _transactionItem(transaction);
-              }).toList()
-            ]),
+            Column(
+              children: [
+                ..._transactions.map((transaction) {
+                  return _transactionItem(transaction);
+                }).toList()
+              ],
+            ),
+            Card(
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Título'),
+                    ),
+                    SizedBox(height: 8),
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Valoe (R\$)'),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    FlatButton(
+                      child: Text('Nova Transação'),
+                      textColor: Colors.purple,
+                      onPressed: () {},
+                    )
+                  ],
+                ),
+              ),
+            )
           ],
         ));
   }
@@ -53,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                 border: Border.all(color: Colors.purple, width: 2),
               ),
               child: Text(
-                'R\$ ${transaction.value.toString()}',
+                'R\$ ${transaction.value.toStringAsFixed(2)}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.purple),
               ),
             ),
@@ -65,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  transaction.date.toString(),
+                  DateFormat('d MMM y').format(transaction.date),
                   style: TextStyle(fontSize: 12, color: Colors.black38),
                 ),
               ],
