@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:expensesmanager/app/model/transaction.dart';
+import 'package:expensesmanager/app/ui/components/chart.dart';
 import 'package:expensesmanager/app/ui/components/transaction_form.dart';
 import 'package:expensesmanager/app/ui/components/transaction_list.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Transaction> _transactions = [
-//    Transaction(id: 't1', title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
-//    Transaction(id: 't2', title: 'Conta de luz', value: 400, date: DateTime.now()),
-//    Transaction(id: 't3', title: 'Playstation 4', value: 1200, date: DateTime.now()),
+    Transaction(id: 't1', title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
+    Transaction(id: 't2', title: 'Conta de luz', value: 400, date: DateTime.now()),
+    Transaction(id: 't3', title: 'Playstation 4', value: 1200, date: DateTime.now()),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions
+        .where((element) => element.date.isAfter(
+              DateTime.now().subtract(
+                Duration(days: 7),
+              ),
+            ))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +45,8 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         padding: EdgeInsets.all(8),
         children: <Widget>[
-          Card(
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Gráfico'),
-            ),
-          ),
-          TransactionList(
-            transactions: _transactions,
-          ),
+          Chart(recentTransactions: _recentTransactions),
+          TransactionList(transactions: _transactions),
         ],
       ),
       floatingActionButton: FloatingActionButton(

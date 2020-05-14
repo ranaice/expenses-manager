@@ -37,52 +37,28 @@ class TransactionList extends StatelessWidget {
           );
   }
 
-  Card _transactionItem(BuildContext context, Transaction transaction) {
+  Widget _transactionItem(BuildContext context, Transaction transaction) {
     return Card(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).primaryColor,
-                    width: 2,
-                  ),
-                ),
-                child: Text(
-                  'R\$ ${transaction.value.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
+      elevation: 4,
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 30,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FittedBox(
+              child: Text(
+                'R\$ ${transaction.value.toStringAsFixed(2)}',
               ),
             ),
-            SizedBox(width: 8),
-            Expanded(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    transaction.title,
-                    style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    DateFormat('d MMM y').format(transaction.date),
-                    style: TextStyle(fontSize: 12, color: Colors.black38),
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
+        ),
+        title: Text(
+          transaction.title,
+          style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          DateFormat('d MMM y').format(transaction.date),
+          style: TextStyle(fontSize: 12, color: Colors.black38),
         ),
       ),
     );
